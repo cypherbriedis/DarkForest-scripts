@@ -13,14 +13,14 @@ for(planet of df.getMyPlanets().filter(p => p.heldArtifactIds.length > 0)){
 		.sort((a, b) => a[1] - b[1]);
 	if(candidates_.length > 0){
 		for (artId of planet.heldArtifactIds){
-			if(!df.getArtifactWithId(artId).isInititalized){
+			if(df.getArtifactWithId(artId).lastActivated === 0 || df.getArtifactWithId(artId).lastActivated - df.getArtifactWithId(artId).lastDeactivated < 0){
 				const energyBudget = Math.floor(99 * planet.energy);
 
 				let energySpent = 0;
 				const energyLeft = energyBudget - energySpent;
 
 				// Remember its a tuple of candidates and their distance
-				const candidate = candidates_[i++][0];
+				const candidate = candidates_[0][0];
 
 				// Rejected if has unconfirmed pending arrivals
 				const unconfirmed = df.getUnconfirmedMoves().filter(move => move.to === candidate.locationId)
