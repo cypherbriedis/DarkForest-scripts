@@ -109,6 +109,7 @@ for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p
 							artCollec++;
 							energySpent += energyNeeded;
 							console.log("Found next hop for: ", artId);
+							break;
 						}
 					}
 					else
