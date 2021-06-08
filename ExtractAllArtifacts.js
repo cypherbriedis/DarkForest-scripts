@@ -5,7 +5,7 @@ function distance(from, to) {
 }
 
 let artCollec = 0
-for(planet of df.getMyPlanets().filter(p => p.heldArtifactIds.length > 0)){
+for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p.heldArtifactIds.length > 0)){
 	const candidates_ = df.getPlanetsInRange(planet.locationId, 99)
 		.filter(p => p.owner === df.getAccount()) //get player planets
 		.filter(p => p.planetType === 3) // filer planet or space rift 
@@ -36,6 +36,7 @@ for(planet of df.getMyPlanets().filter(p => p.heldArtifactIds.length > 0)){
 				}
 				ui.setArtifactSending(artId, candidate.locationId)
 				df.move(planet.locationId, candidate.locationId, energyNeeded, 0, artId);
+				console.log(planet.locationId, artId)
 				artCollec++;
 				energySpent += energyNeeded;
 			}
