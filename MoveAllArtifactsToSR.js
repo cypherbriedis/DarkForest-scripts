@@ -50,7 +50,7 @@ for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p
 
 				// Rejected if has unconfirmed pending arrivals
 				const unconfirmed = df.getUnconfirmedMoves().filter(move => move.to === candidate.locationId)
-				if (unconfirmed.length !== 0) {
+				if (unconfirmed.length > 5) {
 				  continue;
 				}
 
@@ -94,7 +94,7 @@ for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p
 
 							// Rejected if has unconfirmed pending arrivals
 							const unconfirmed = df.getUnconfirmedMoves().filter(move => move.to === bigPlanet[0].locationId)
-							if (unconfirmed.length !== 0) {
+							if (unconfirmed.length > 5) {
 							  continue;
 							}
 
