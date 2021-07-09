@@ -70,7 +70,7 @@ for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p
 		{
 			let bigPlanets_ = df.getPlanetsInRange(planet.locationId, 99)
 			.filter(p => p.owner === df.getAccount()) //get player planets
-			.filter(filter(p => p.planetType != 1)	//Do not send to Asteroids
+			.filter(p => p.planetType != 1)	//Do not send to Asteroids
 			.filter(p => p.planetLevel > 2)
 			.map(to => [to, distance(planet, to)])
 			.sort((a, b) => a[1] - b[1]);
