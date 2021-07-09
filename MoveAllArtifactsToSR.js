@@ -12,7 +12,7 @@ for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p
 			candidates_ = df.getPlanetsInRange(planet.locationId, 99)
 			.filter(p => p.owner === df.getAccount()) //get player planets
 			.filter(p => p.planetType === 3) // filer space rift
-			.filter(p => p.planetLevel > 2)
+			.filter(p => p.planetLevel >= 2)
 			.map(to => [to, distance(planet, to)])
 			.sort((a, b) => a[1] - b[1]);
 		}
@@ -20,7 +20,7 @@ for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p
 			candidates_ = df.getPlanetsInRange(planet.locationId, 99)
 			.filter(p => p.owner === df.getAccount()) //get player planets
 			.filter(p => p.planetType === 3) // filer space rift
-			.filter(p => p.planetLevel > 3)
+			.filter(p => p.planetLevel >= 3)
 			.map(to => [to, distance(planet, to)])
 			.sort((a, b) => a[1] - b[1]);
 		}
@@ -28,7 +28,7 @@ for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p
 			candidates_ = df.getPlanetsInRange(planet.locationId, 99)
 			.filter(p => p.owner === df.getAccount()) //get player planets
 			.filter(p => p.planetType === 3) // filer space rift
-			.filter(p => p.planetLevel > 4)
+			.filter(p => p.planetLevel >= 4)
 			.map(to => [to, distance(planet, to)])
 			.sort((a, b) => a[1] - b[1]);
 		} else {
