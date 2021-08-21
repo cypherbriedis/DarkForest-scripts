@@ -7,7 +7,7 @@ async function checkClaimer() {
 	let myId = df.account;
 	let planetClaimer = df.getPlanetWithId(planetId);
 	while(planetClaimer.claimer === undefined){
-		console.log("Checking planet");
+		df.terminal.current.printShellLn("Checking planet");
 		planetClaimer = df.getPlanetWithId(planetId);
 		if(planetClaimer.owner === myId && planetClaimer.claimer === undefined){
 				df.claimLocation(planetId);
@@ -15,9 +15,9 @@ async function checkClaimer() {
 		await sleep(30000);
 	}
 	if(planetClaimer === myId){
-		console.log("Yesssss, it's mine: " + planetClaimer.claimer);
+		df.terminal.current.printShellLn("Yesssss, it's mine: " + planetClaimer.claimer);
 	} else {
-		console.log("Shit, i lost it: " + planetClaimer.claimer);
+		df.terminal.current.printShellLn("Shit, i lost it: " + planetClaimer.claimer);
 	}
 }
 checkClaimer();
