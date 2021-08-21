@@ -14,7 +14,7 @@ async function checkClaimer() {
 		}
 		await sleep(30000);
 	}
-	if(planetClaimer === myId){
+	if(planetClaimer.claimer === myId){
 		df.terminal.current.printShellLn("Yesssss, it's mine: " + planetClaimer.claimer);
 	} else {
 		df.terminal.current.printShellLn("Shit, i lost it: " + planetClaimer.claimer);
