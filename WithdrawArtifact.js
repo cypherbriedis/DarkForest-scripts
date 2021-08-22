@@ -7,8 +7,8 @@ for(planet of df.getMyPlanets().filter(p => p.planetType === 3).filter(p => p.he
 			wArt++;
 		}
 		else {
-		 console.log("Space rift LvL too small: ", planet.planetLevel, df.getArtifactWithId(i).rarity);
+		 df.terminal.current.printShellLn("Space rift LvL too small: " + planet.planetLevel + " " + df.getArtifactWithId(i).rarity);
 		}
 	}
 }
-console.log("Withdrawed artfacts: ", wArt);
+df.terminal.current.printShellLn("Withdrawed artfacts: " + wArt);
