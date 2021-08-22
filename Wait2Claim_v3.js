@@ -12,7 +12,7 @@ async function checkClaimer() {
 		let voyage = df.getAllVoyages().filter(p=>(p.player === df.account && p.toPlanet === planetId));
 		let trTime = voyage[0].arrivalTime * 1000;
 		let secLeft = trTime - Date.now();
-		let enLeft = Math.floor(voyage[0].energyArriving - planetClaimer.energy*90/100);
+		let enLeft = Math.floor(voyage[0].energyArriving - planetClaimer.energy * planetClaimer.defense/100);
 		let inpStr = "Ok";
 		if (enLeft <=0){
 			inpStr = "No energy";
