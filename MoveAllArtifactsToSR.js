@@ -102,4 +102,4 @@ for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p
 		}
 	}
 }
-console.log("Artifacts collected: ", artCollec);
+df.terminal.current.printShellLn("Artifacts collected: " + artCollec);
