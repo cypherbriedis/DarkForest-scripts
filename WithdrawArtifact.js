@@ -7,7 +7,7 @@ for(planet of df.getMyPlanets().filter(p => p.planetType === 3).filter(p => p.he
 			wArt++;
 		}
 		else {
-		 df.terminal.current.printShellLn("Space rift LvL too small: " + planet.planet + " " + df.getArtifactWithId(i).rarity);
+		 df.terminal.current.printShellLn("Space rift LvL too small: " + planet.planetId + " " + df.getArtifactWithId(i).rarity);
 		}
 	}
 }
