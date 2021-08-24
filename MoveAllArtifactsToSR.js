@@ -6,33 +6,36 @@ function distance(from, to) {
 
 let artCollec = 0;
 let energySpent = 0;
-let addEnergy = 10;
+const myAccount = df.account;
 for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p.heldArtifactIds.length > 0)){
 	for (artId of planet.heldArtifactIds){
 		let candidates_ = [];
 		if(df.getArtifactWithId(artId).rarity === 1){
 			candidates_ = df.getPlanetsInRange(planet.locationId, 99)
-			.filter(p => p.owner === df.getAccount()) //get player planets
-			.filter(p => p.planetType === 3) // filer space rift
-			.filter(p => p.planetLevel >= 2)
-			.map(to => [to, distance(planet, to)])
-			.sort((a, b) => a[1] - b[1]);
+			.filter(p => (
+				p.owner === myAccount && //get player planets
+				p.planetType === 3 && // filer space rift
+				p.planetLevel >= 2))
+				.map(to => [to, distance(planet, to)])
+				.sort((a, b) => a[1] - b[1]);
 		}
 		else if(df.getArtifactWithId(artId).rarity === 2){
 			candidates_ = df.getPlanetsInRange(planet.locationId, 99)
-			.filter(p => p.owner === df.getAccount()) //get player planets
-			.filter(p => p.planetType === 3) // filer space rift
-			.filter(p => p.planetLevel >= 3)
-			.map(to => [to, distance(planet, to)])
-			.sort((a, b) => a[1] - b[1]);
+			.filter(p => (
+				p.owner === myAccount && //get player planets
+				p.planetType === 3 && // filer space rift
+				p.planetLevel >= 3))
+				.map(to => [to, distance(planet, to)])
+				.sort((a, b) => a[1] - b[1]);
 		}
 		else{
 			candidates_ = df.getPlanetsInRange(planet.locationId, 99)
-			.filter(p => p.owner === df.getAccount()) //get player planets
-			.filter(p => p.planetType === 3) // filer space rift
-			.filter(p => p.planetLevel >= 4)
-			.map(to => [to, distance(planet, to)])
-			.sort((a, b) => a[1] - b[1]);
+			.filter(p => (
+				p.owner === myAccount && //get player planets
+				p.planetType === 3 && // filer space rift
+				p.planetLevel >= 4))
+				.map(to => [to, distance(planet, to)])
+				.sort((a, b) => a[1] - b[1]);
 		}
 		if(candidates_.length > 0){
 			if(df.getArtifactWithId(artId).lastActivated === 0 || df.getArtifactWithId(artId).lastActivated - df.getArtifactWithId(artId).lastDeactivated < 0){
@@ -45,7 +48,7 @@ for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p
 				// Rejected if has unconfirmed pending arrivals
 				const unconfirmed = df.getUnconfirmedMoves().filter(move => move.to === candidate.locationId);
 				const energyForMove = df.getEnergyNeededForMove(planet.locationId, candidate.locationId, 1);
-				const energyNeeded = Math.ceil(energyForMove + energyForMove * addEnergy / 100);
+				const energyNeeded = Math.ceil(energyForMove + energyForMove);
 				if (unconfirmed.length < 6 && energyLeft - energyNeeded > 0) {
 					ui.setArtifactSending(artId, candidate.locationId)
 					df.move(planet.locationId, candidate.locationId, energyNeeded, 0, artId);
@@ -57,19 +60,21 @@ for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p
 		else
 		{
 			let bigPlanets_ = df.getPlanetsInRange(planet.locationId, 99)
-			.filter(p => p.owner === df.getAccount()) //get player planets
-			.filter(p => p.planetType != 1)	//Do not send to Asteroids
-			.filter(p => p.planetLevel > 2)
-			.map(to => [to, distance(planet, to)])
-			.sort((a, b) => a[1] - b[1]);
+			.filter(p => (
+				p.owner === myAccount && //get player planets
+				p.planetType != 1 &&	//Do not send to Asteroids
+				p.planetLevel > 2))
+				.map(to => [to, distance(planet, to)])
+				.sort((a, b) => a[1] - b[1]);
 			if(bigPlanets_.length > 0){
 				for(bigPlanet of bigPlanets_){
 					let nextHop_ = df.getPlanetsInRange(bigPlanet[0].locationId, 99)
-					.filter(p => p.owner === df.getAccount()) //get player planets
-					.filter(p => p.planetType === 3) // filer space rift
-					.filter(p => p.planetLevel > 2)
-					.map(to => [to, distance(bigPlanet[0], to)])
-					.sort((a, b) => a[1] - b[1]);
+					.filter(p => (
+					p.owner === myAccount && //get player planets
+						p.planetType === 3 && // filer space rift
+						p.planetLevel > 2))
+						.map(to => [to, distance(bigPlanet[0], to)])
+						.sort((a, b) => a[1] - b[1]);
 					if(nextHop_.length > 0){
 						if(df.getArtifactWithId(artId).lastActivated === 0 || df.getArtifactWithId(artId).lastActivated - df.getArtifactWithId(artId).lastDeactivated < 0){
 							const energyBudget = Math.floor(planet.energy);
@@ -78,7 +83,7 @@ for(planet of df.getMyPlanets().filter(p => p.destroyed === false).filter(p => p
 							// Rejected if has unconfirmed pending arrivals
 							const unconfirmed = df.getUnconfirmedMoves().filter(move => move.to === bigPlanet[0].locationId)
 							let energyForMove = df.getEnergyNeededForMove(planet.locationId, bigPlanet[0].locationId, 1);
-							const energyNeeded = Math.ceil(energyForMove + energyForMove * addEnergy / 100);
+							const energyNeeded = Math.ceil(energyForMove + energyForMove);
 							if (unconfirmed.length < 5 && energyLeft - energyNeeded > 0) {
 								ui.setArtifactSending(artId, bigPlanet[0].locationId)
 								df.move(planet.locationId, bigPlanet[0].locationId, energyNeeded, 0, artId);
