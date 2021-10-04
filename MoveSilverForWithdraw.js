@@ -3,8 +3,8 @@ function distance(from, to) {
   let toloc = to.location;
   return Math.sqrt((fromloc.coords.x - toloc.coords.x) ** 2 + (fromloc.coords.y - toloc.coords.y) ** 2);
 }
-let sTotal = 0;
-let sTotalMoved = 0;
+sTotal = 0;
+sTotalMoved = 0;
 
 for(planet of df.getMyPlanets().filter(p => p.planetType === 1).filter(p => p.planetLevel <= 4).filter(p => p.planetLevel >= 3)){
 	if (Math.floor(planet.silver)/planet.silverCap > 0.75){
