@@ -4,7 +4,7 @@ function distance(from, to) {
   return Math.sqrt((fromloc.coords.x - toloc.coords.x) ** 2 + (fromloc.coords.y - toloc.coords.y) ** 2);
 }
 
-let artCollec = 0
+artCollec = 0
 for(planet of df.getMyPlanets().filter(p => p.planetType === 2).filter(p => p.heldArtifactIds.length > 0)){
 	const candidates_ = df.getPlanetsInRange(planet.locationId, 99)
 		.filter(p => p.owner === df.getAccount()) //get player planets
