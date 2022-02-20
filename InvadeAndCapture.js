@@ -35,11 +35,11 @@ async function capturePlanet() {
 			{
 				blocksLeft = planet.invadeStartBlock + 2100 - df.getEthConnection().blockNumber;
 				energyProc = Math.ceil(planet.energy/planet.energyCap*100);
-				df.terminal.current.printShellLn("Blocks Left: " + blocksLeft + " Energy: " + energyProc + " LocationId: " + planet.locationId);
+				df.terminal.current.printShellLn("Blocks Left: " + blocksLeft + " Energy: " + energyProc + "% LocationId: " + planet.locationId);
 			}
 		}
-		df.terminal.current.printShellLn("********")
-		await sleep(60000);  //Check every 1min
+		df.terminal.current.printShellLn("************************")
+		await sleep(60000);
 	}
 }
 capturePlanet();
