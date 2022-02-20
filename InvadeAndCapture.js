@@ -11,20 +11,22 @@ function check_a_point(a, b, x, y, r) {
 }
 async function capturePlanet() {
 	loop = true;
+	myAccount = df.account;
 	while(loop){
 		captureZones = df.getCaptureZones();
+		candidates = df.getMyPlanets().filter(p=>p.invader == "0x0000000000000000000000000000000000000000");
 		for (cZ = captureZones.values(), val=null; val=cZ.next().value;){
 			xCoord = val.coords.x;
 			yCoord = val.coords.y;
 			radiusR = 1000;
-			for (planet of df.getMyPlanets().filter(p=>p.invader == "0x0000000000000000000000000000000000000000")){
+			for (planet of candidates){
 				if(check_a_point(planet.location.coords.x, planet.location.coords.y, xCoord, yCoord, radiusR)){
 					df.terminal.current.printShellLn("Invading planet: " + planet.locationId);
 					df.invadePlanet(planet.locationId);
 				}
 			}
 		}
-		planets = df.getMyPlanets().filter(p=>p.capturer == "0x0000000000000000000000000000000000000000" && p.invader == df.account)
+		planets = df.getMyPlanets().filter(p=>p.capturer == "0x0000000000000000000000000000000000000000" && p.invader == myAccount)
 		for(planet of planets){
 			
 			if(planet.invadeStartBlock + 2100 < df.getEthConnection().blockNumber && planet.energy/planet.energyCap*100 >= 81){
@@ -33,7 +35,7 @@ async function capturePlanet() {
 			}
 			else
 			{
-				blocksLeft = planet.invadeStartBlock + 2100 - df.getEthConnection().blockNumber;
+				blocksLeft = planet.invadeStartBlock + 2050 - df.getEthConnection().blockNumber;
 				energyProc = Math.ceil(planet.energy/planet.energyCap*100);
 				df.terminal.current.printShellLn("Blocks Left: " + blocksLeft + " Energy: " + energyProc + "% LocationId: " + planet.locationId);
 			}
